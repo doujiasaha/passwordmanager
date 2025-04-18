@@ -1,9 +1,17 @@
 from tkinter import *
-
+import random, string
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
+def gen():
+    length = 16
+    random_password = "".join(random.choices(string.ascii_letters + string.digits, k=length))
+    password_box.insert(END,random_password)
+    
+
 # ---------------------------- SAVE PASSWORD ------------------------------- #
+
+
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -29,7 +37,7 @@ password = Label(text="Password:")
 password.grid(column=0,row=3)
 
 #Entries
-website_box = Entry(width=3)
+website_box = Entry(width=35)
 website_box.grid(column=1,row=1, columnspan=2)
 website_box.focus()
 
@@ -41,7 +49,7 @@ password_box = Entry(width=18)
 password_box.grid(column=1,row=3)
 
 #Buttons
-generate = Button(text="Generate Password")
+generate = Button(text="Generate Password", command=gen)
 generate.grid(column=2,row=3)
 
 add_button = Button(text="Add", width=36)
