@@ -11,7 +11,18 @@ def gen():
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
+def save_password():
+    
+    website_input = website_box.get()
+    user_input = name_box.get()
+    password_input = password_box.get()
+    
+    with open("data.txt", "a") as file:
+        file.write(f"{website_input} | {user_input} | {password_input} \n")
 
+    website_box.delete(0,END)
+    #name_box.delete(0,END)
+    password_box.delete(0,END)
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -52,7 +63,7 @@ password_box.grid(column=1,row=3)
 generate = Button(text="Generate Password", command=gen)
 generate.grid(column=2,row=3)
 
-add_button = Button(text="Add", width=36)
+add_button = Button(text="Add", width=36, command=save_password)
 add_button.grid(column=1,row=4, columnspan=2)
 
 window.mainloop()
