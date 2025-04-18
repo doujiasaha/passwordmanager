@@ -1,12 +1,14 @@
 from tkinter import *
+from tkinter import messagebox
 import random, string
-
+import pyperclip
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
 def gen():
     length = 16
     random_password = "".join(random.choices(string.ascii_letters + string.digits, k=length))
     password_box.insert(END,random_password)
+    pyperclip.copy(random_password)
     
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
@@ -17,12 +19,19 @@ def save_password():
     user_input = name_box.get()
     password_input = password_box.get()
     
-    with open("data.txt", "a") as file:
-        file.write(f"{website_input} | {user_input} | {password_input} \n")
-
-    website_box.delete(0,END)
-    #name_box.delete(0,END)
-    password_box.delete(0,END)
+    if len(website_input) == 0 or len(password_input) == 0:
+        messagebox.showinfo(title="Error", message="You've left some fields empty.")
+    else:
+        is_ok = messagebox.askokcancel(title=website_input, message=f"Entry has been saved to file. \nEmail: {user_input} "
+                                                            f"\nPassword: {password_input} \nIs it ok to save?")
+        
+        if is_ok:
+            with open("data.txt", "a") as file:
+                file.write(f"{website_input} | {user_input} | {password_input} \n")
+                website_box.delete(0,END)
+                #name_box.delete(0,END)
+                password_box.delete(0,END)
+    
 
 # ---------------------------- UI SETUP ------------------------------- #
 
